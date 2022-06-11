@@ -14,6 +14,9 @@ library(tidyr)
 install.packages("dplyr")
 library(dplyr)
 
+install.packages("zoo")
+library(zoo)
+
 install.packages("devtools")
 library(devtools)
 
@@ -84,9 +87,23 @@ df_filt <- runGprimeAnalysis(df_filt,
                              filterThreshold = 0.3)
                              
 QTLAlleleFreq::AlleleFreqSorghum(SNPset = df_filt, k = 4,step = 1,Chrom1 = "Chr01",Chrom2 = "Chr02", Chrom3 = "Chr03",Chrom4 = "Chr04", Chrom5 = "Chr05",Chrom6 = "Chr06",Chrom7 = "Chr07",Chrom8 = "Chr08",Chrom9 = "Chr09",Chrom10 = "Chr10")
+```
 
 
 
-QTLAlleleFreq::AlleleFreqAny(SNPset = df_filt,k = 4, step = 1,Chrom = "Chr04", scalar = 1, LowerBound = 0 ,UpperBound =90000000)
+![Rplot01](https://user-images.githubusercontent.com/93121277/173185271-ae15afbd-6787-49d0-80ed-93e91ef6a685.png)
+
+
+```r
+
+QTLAlleleFreq::AlleleFreqAny(SNPset = df_filt,k = 8, step = 1,Chrom = "Chr04", scalar = 1, LowerBound = 0 ,UpperBound =90000000)
 
 ```
+
+
+![Rplot04](https://user-images.githubusercontent.com/93121277/173185533-f9f11bab-69ae-45b2-99ba-bea1535495bc.png)
+
+
+
+
+
