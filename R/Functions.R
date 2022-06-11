@@ -169,7 +169,7 @@ AlleleFreqAny <- function(SNPset, Chrom, k, step, scalar, LowerBound, UpperBound
 #' @export AlleleFreqBrachypodium
 
 
-AlleleFreqBrachypodium<- function(SNPset, Chrom1,Chrom2,Chrom3,Chrom4,Chrom5,Chrom6,Chrom7,Chrom8,Chrom9,Chrom10, k, step){
+AlleleFreqBrachypodium<- function(SNPset, Chrom1,Chrom2,Chrom3,Chrom4,Chrom5, k, step){
   frame <- SNPset %>% dplyr::mutate(LowRef = AD_REF.LOW, HighRef = AD_REF.HIGH, LowAlt = AD_ALT.LOW, HighAlt = AD_ALT.HIGH) %>% dplyr::select(CHROM,POS,DP.LOW,DP.HIGH,LowRef, HighRef, LowAlt, HighAlt,nSNPs)
   frame1 <- frame %>% dplyr::filter(CHROM == Chrom1)
 

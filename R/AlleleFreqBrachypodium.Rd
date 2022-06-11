@@ -1,6 +1,6 @@
 \name{AlleleFreqBrachypodium}
 \alias{AlleleFreqBrachypodium}
-\title{HighandLowBulkFrequencies}
+\title{AlleleFreqBrachypodium}
 \usage{
   AlleleFreqBrachypodium(SNPset = frame, k = 4,step = 1,Chrom1 = "Chr01",Chrom2 = "Chr02", Chrom3 = "Chr03",Chrom4 = "Chr04", Chrom5 = "Chr05")
 }
