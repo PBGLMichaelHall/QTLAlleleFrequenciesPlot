@@ -108,6 +108,14 @@ QTLAlleleFreq::AlleleFreqAny(SNPset = df_filt,k = 8, step = 1,Chrom = "Chr04", s
 
 ![Rplot04](https://user-images.githubusercontent.com/93121277/173185533-f9f11bab-69ae-45b2-99ba-bea1535495bc.png)
 
+```r
+
+VCFstat::FacetChromQual(vcf = "freebayes_D2.filtered.vcf", chromlist = chromlist,windowSize = 5000000, ncol=10)
+
+```
+
+
+
 
 *Brachypodium Model Organism a grass species*
 ```r
