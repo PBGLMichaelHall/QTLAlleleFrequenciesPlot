@@ -1,4 +1,5 @@
 # QTLAlleleFrequenciesPlot
+*Sorghum*
 
 ```r
 
@@ -34,7 +35,7 @@ library(QTLAlleleFrequenciesPlot)
 
 Chroms <- c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10")
 
-importFromVCF(file = "freebayes~bwa~IRGSP-1.0~S9~HOM-VAR.vcf.gz",highBulk = "D2_F2_tt", 
+importFromVCF(file = "freebayes_D2.filtered.vcf",highBulk = "D2_F2_tt", 
 lowBulk = "D2_F2_TT",chromList = Chroms,filename = "HallSorghum")
 
 HighBulk <- "D2_F2_tt"
@@ -108,6 +109,7 @@ QTLAlleleFreq::AlleleFreqAny(SNPset = df_filt,k = 8, step = 1,Chrom = "Chr04", s
 ![Rplot04](https://user-images.githubusercontent.com/93121277/173185533-f9f11bab-69ae-45b2-99ba-bea1535495bc.png)
 
 
+*Brachypodium Model Organism a grass species*
 ```r
 
 QTLAlleleFreq::NumOfSNPs(file="freebayes~bwa~GCF_000005505.3_Brachypodium_distachyon_v3.0~all_samples~filtered-strict.vcf"
