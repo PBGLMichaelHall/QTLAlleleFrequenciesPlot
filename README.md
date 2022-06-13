@@ -110,10 +110,11 @@ QTLAlleleFreq::AlleleFreqAny(SNPset = df_filt,k = 8, step = 1,Chrom = "Chr04", s
 
 ```r
 
-VCFstat::FacetChromQual(vcf = "freebayes_D2.filtered.vcf", chromlist = chromlist,windowSize = 5000000, ncol=10)
+VCFstat::FacetChromQual(vcf = "freebayes_D2.filtered.vcf", chromlist = chromlist,windowSize = 5000000, ncol=10,bins = 50)
 
 ```
 
+![plot_zoom_png](https://user-images.githubusercontent.com/93121277/173346260-0cf99118-2edb-45fe-83e8-f06fa613b8a1.png)
 
 
 
