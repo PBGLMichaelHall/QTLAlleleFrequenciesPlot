@@ -34,7 +34,8 @@ library(QTLAlleleFrequenciesPlot)
 
 Chroms <- c("Chr01","Chr02","Chr03","Chr04","Chr05","Chr06","Chr07","Chr08","Chr09","Chr10")
 
-importFromVCF(file = "freebayes~bwa~IRGSP-1.0~S9~HOM-VAR.vcf.gz",highBulk = "D2_F2_tt", lowBulk = "D2_F2_TT",chromList = Chroms,filename = "HallSorghum")
+importFromVCF(file = "freebayes~bwa~IRGSP-1.0~S9~HOM-VAR.vcf.gz",highBulk = "D2_F2_tt", 
+lowBulk = "D2_F2_TT",chromList = Chroms,filename = "HallSorghum")
 
 HighBulk <- "D2_F2_tt"
 LowBulk <- "D2_F2_TT"
@@ -86,7 +87,10 @@ df_filt <- runGprimeAnalysis(df_filt,
                              outlierFilter = "deltaSNP",
                              filterThreshold = 0.3)
                              
-QTLAlleleFreq::AlleleFreqSorghum(SNPset = df_filt, k = 4,step = 1,Chrom1 = "Chr01",Chrom2 = "Chr02", Chrom3 = "Chr03",Chrom4 = "Chr04", Chrom5 = "Chr05",Chrom6 = "Chr06",Chrom7 = "Chr07",Chrom8 = "Chr08",Chrom9 = "Chr09",Chrom10 = "Chr10")
+QTLAlleleFreq::AlleleFreqSorghum(SNPset = df_filt, k = 4,step = 1,
+Chrom1 = "Chr01",Chrom2 = "Chr02", Chrom3 = "Chr03",Chrom4 = "Chr04",
+Chrom5 = "Chr05",Chrom6 = "Chr06",Chrom7 = "Chr07",Chrom8 = "Chr08"
+,Chrom9 = "Chr09",Chrom10 = "Chr10")
 ```
 
 
@@ -103,6 +107,17 @@ QTLAlleleFreq::AlleleFreqAny(SNPset = df_filt,k = 8, step = 1,Chrom = "Chr04", s
 
 ![Rplot04](https://user-images.githubusercontent.com/93121277/173185533-f9f11bab-69ae-45b2-99ba-bea1535495bc.png)
 
+
+```r
+
+QTLAlleleFreq::NumOfSNPs(file="freebayes~bwa~GCF_000005505.3_Brachypodium_distachyon_v3.0~all_samples~filtered-strict.vcf"
+,chromList = c("NC_016131.3","NC_016132.3","NC_016133.3","NC_016134.3","NC_016135.3"),
+filename = "HallBrach",filter = FALSE, windowsize = 1e6,var = "nSNPs",
+scaleChroms = TRUE, line = TRUE, WriteTable = TRUE)
+
+```
+
+![Rplot01](https://user-images.githubusercontent.com/93121277/173334622-ae289522-93f7-4d79-b87a-c66803af0837.png)
 
 
 
