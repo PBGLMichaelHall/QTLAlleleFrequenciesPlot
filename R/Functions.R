@@ -228,3 +228,81 @@ AlleleFreqBrachypodium<- function(SNPset, Chrom1,Chrom2,Chrom3,Chrom4,Chrom5, k,
   e <- ggplot(data, aes(x = NewPOS)) + geom_line(aes(y = newLowBulkFreq), color = "orange") + geom_point(aes(y = newLowBulkFreq), color = "orange") + geom_line(aes(y = highBulkFreq), color = "black") + geom_point(aes(y = highBulkFreq), color = "black") + facet_grid(rows = vars(CHROM))
   print(e + ggplot2::labs(title = "Allelic Frequency Plot of High Bulk and Low Bulk Samples",y = "HighBulk (Black) LowBulk (Orange) Allelic Frequencies", x = "Position"))
 }
+                                      
+                                      
+                                      
+#' @title NumofSNPs
+#' @description Plots A line graph of Number of SNPs called from a variant file and assigns the dataframe to Global Environment
+#' @param file A vcf file
+#' @param chromList A vector of chromosomes wanting to call in the anlaysis i.e. c("Chrom1","Chrom2","Chrom3","Chrom4","Chrom5","Chrom6","Chrom7","Chrom8","Chrom9","Chrom10")
+#' @param filename Provides prefix to filename
+#' @param filter Filter variant file by Filter column did it, "PASS" or "."; If TRUE will only call "PASS" Variants. If FALSE will call ALL variants  
+#' @param windowsize Specify size of window to call variants in
+#' @param var Choose other variables to plot "DP", "QUAL" only
+#' @param scaleChroms Do you want to scale chromosomes
+#' @param line Do you want a line graph or points only
+#' @param writeTable Do you want it to write a csv file of the data frame
+#' @export NumOfSNPs
+                                     
+                                      
+                                      
+NumOfSNPs <- 
+function (file, chromList = NULL, filename = NULL, filter = NULL, windowsize = NULL, var = "nSNPs", scaleChroms = TRUE, line = TRUE, WriteTable = TRUE) 
+{
+  vcf <- vcfR::read.vcfR(file = file)
+  message("Keeping SNPs that pass all filters Either PASS or No Filter")
+  if (filter == TRUE) {
+    vcf <- vcf[vcf@fix[, "FILTER"] == "PASS"]
+  }
+  else if (filter == FALSE) {
+    vcf <- vcf
+  }
+  fix <- dplyr::as_tibble(vcf@fix[, c("CHROM", "POS", "REF", "ALT","QUAL")]) %>% dplyr::mutate(Key = seq(1:nrow(.)))
+  
+  tidy_gt <- extract_gt_tidy(vcf, format_fields = c("AD", "DP", "GQ"), gt_column_prepend = "", alleles = FALSE)
+  SNPset <- tidy_gt %>% dplyr::full_join(x = fix, by = "Key")
+  if (!is.null(chromList)) {message("Removing the following chromosomes: ", paste(unique(SNPset$CHROM)[!unique(SNPset$CHROM) %in% chromList], collapse = ", "))
+    SNPset <- SNPset[SNPset$CHROM %in% chromList, ]
+    SNPset <- SNPset %>% dplyr::mutate(POS = as.double(POS))
+    SNPset <- SNPset %>% dplyr::group_by(CHROM) %>% dplyr::mutate(nSNPs = QTLseqr::countSNPs_cpp(POS = POS, windowSize = 1e6))
+    }
+  {
+    
+    if (!var %in% c("nSNPs","DP","QUAL"))
+      stop("Please choose one of the following variables to plot: \"nSNPs\"")
+  }
+ 
+  p <- ggplot2::ggplot(data = SNPset) + ggplot2::scale_x_continuous(breaks = seq(from = 0, to = max(SNPset$POS), by = 10^(floor(log10(max(SNPset$POS))))), labels = QTLseqr::format_genomic(), name = "Genomic Position (Mb)") + ggplot2::theme(plot.margin = ggplot2::margin(b = 10, l = 20, r = 20, unit = "pt"))
+
+  
+  if (var == "nSNPs") {
+    p <- p + ggplot2::ylab("Number of SNPs in window")
+  }
+  if (var == "DP"){
+    p <- p + ggplot2::ylab("Depth")
+  }
+  if (var == "QUAL"){
+    p <- p + ggplot2::ylab("Quality Score Fixed Field")
+  }
+  
+  if (line) {
+    p <- p + ggplot2::geom_line(ggplot2::aes_string(x = "POS", y = var))
+  }
+  if (!line) {
+    p <- p + ggplot2::geom_point(ggplot2::aes_string(x = "POS", y = var))
+  }
+  if (scaleChroms == TRUE) {
+    p <- p + ggplot2::facet_grid(~CHROM, scales = "free_x", 
+                                 space = "free_x")
+  }
+  else {
+    p <- p + ggplot2::facet_grid(~CHROM, scales = "free_x")
+  }
+  print(p)
+
+ if (WriteTable == TRUE) {
+    write.table(SNPset, file = paste0(filename, ".csv"), row.names = FALSE, col.names = TRUE, sep = ",")
+ }
+  assign("SNPset", value = SNPset, envir = globalenv())
+}                                      
+                                      
