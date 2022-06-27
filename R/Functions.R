@@ -259,7 +259,7 @@ function (file, chromList = NULL, filename = NULL, filter = NULL, windowsize = N
   }
   fix <- dplyr::as_tibble(vcf@fix[, c("CHROM", "POS", "REF", "ALT","QUAL")]) %>% dplyr::mutate(Key = seq(1:nrow(.)))
   
-  tidy_gt <- extract_gt_tidy(vcf, format_fields = c("AD", "DP", "GQ"), gt_column_prepend = "", alleles = FALSE)
+  tidy_gt <- vcfR::extract_gt_tidy(vcf, format_fields = c("AD", "DP", "GQ"), gt_column_prepend = "", alleles = FALSE)
   SNPset <- tidy_gt %>% dplyr::full_join(x = fix, by = "Key")
   if (!is.null(chromList)) {message("Removing the following chromosomes: ", paste(unique(SNPset$CHROM)[!unique(SNPset$CHROM) %in% chromList], collapse = ", "))
     SNPset <- SNPset[SNPset$CHROM %in% chromList, ]
