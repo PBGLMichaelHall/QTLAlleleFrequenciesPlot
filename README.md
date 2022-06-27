@@ -25,7 +25,7 @@ devtools::install_github("PBGLMichaelHall/QTLseqr",force=TRUE)
 library(QTLseqr)
 
 devtools::install_github("PBGLMichaelHall/QTLAlleleFrequenciesPlot")
-library(QTLAlleleFrequenciesPlot)
+library(QTLAlleleFreq)
 
 #Set High bulk and Low bulk sample names and parser generated file name
 #The file name is generated from the QTLParser_1_MH function in line 119
